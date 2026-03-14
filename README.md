@@ -29,7 +29,26 @@ Some prompts to answer:
 
 You can include a simple diagram or bullet list if helpful.
 
----
+Real-world recommendation systems like Spotify and Apple Music combine numerical similarity and categorical matching into a unified scoring framework, then apply a separate ranking layer to ensure the final list is diverse and engaging rather than just a stack of near-identical songs. Our recommendation system uses a two-layer approach inspired by real-world platforms like Spotify and Apple Music. First, we apply a Scoring Rule that combines both categorical and numerical features into a single composite score for each song:
+
+Genre Match: If a song’s genre matches the user’s preferred genre, it receives a bonus of +1.0 point.
+Mood Match: If a song’s mood matches the user’s preferred mood, it receives a bonus of +0.7 points.
+Energy Similarity: We calculate how close the song’s energy value is to the user’s target energy using the formula:
+energy_score = 1 - abs(song_energy - user_energy)
+This value ranges from 0 (least similar) to 1 (most similar).
+The final composite score for each song is the sum of these three components. This balanced weighting ensures that no single feature dominates the recommendations, allowing both categorical preferences (like genre and mood) and nuanced numerical similarity (energy) to influence the results.
+
+After scoring, we apply a Ranking Rule: all songs are sorted by their composite scores in descending order. The top results are selected as recommendations. This ranking step can also be extended to promote diversity and avoid recommending near-duplicate songs.
+
+Our Song class encapsulates all relevant song attributes, while the UserProfile class stores the user’s preferences. For each song, we compare its attributes to the user’s profile, compute a score, and then rank all songs to produce the final recommendations.
+
+### Potential Biases
+
+1. **Genre & Mood Popularity** — Common genres/moods dominate recommendations, crowding out underrepresented ones.
+2. **Feature Weighting** — Chosen weights are subjective and may not reflect every user's true preferences.
+3. **Energy Range** — The similarity formula assumes energy matters equally to all users across all genres.
+4. **Cold Start** — New or niche songs are less likely to surface since the system favors common preference matches.
+5. **Lack of Diversity** — Without explicit diversity enforcement, top results may be repetitively similar in artist or sub-genre.
 
 ## Getting Started
 

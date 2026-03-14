@@ -1,0 +1,13 @@
+flowchart TD
+    A["User Input:<br/>- Favorite Genre<br/>- Favorite Mood<br/>- Target Energy"] --> B[Load Songs from songs.csv]
+    B --> C{For each Song}
+    C --> D["Check Genre Match<br/>+2.0 if match"]
+    C --> E["Check Mood Match<br/>+1.0 if match"]
+    C --> F["Calculate Energy Similarity<br/>score = 1 - |song_energy - user_energy|"]
+    D & E & F --> G["Sum Weighted Score<br/>score = genre + mood + energy"]
+    G --> H[Store Song and Score]
+    H --> I{All Songs Scored?}
+    I -- No --> C
+    I -- Yes --> J[Sort Songs by Score Descending]
+    J --> K[Select Top K Songs]
+    K --> L["Output:<br/>Top K Recommendations<br/>[Title, Artist, Score, Explanation]"]
