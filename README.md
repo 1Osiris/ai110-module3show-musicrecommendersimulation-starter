@@ -4,30 +4,16 @@
 
 In this project you will build and explain a small music recommender system.
 
-Your goal is to:
 
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
+This version recommends songs based on user preferences for genre, mood, and energy. It scores each song using these features and returns the top matches. The system is simple and designed for classroom learning.
 
 ---
 
 ## How The System Works
 
-Explain your design in plain language.
 
-Some prompts to answer:
+Each Song uses genre, mood, and energy. UserProfile stores the user's preferred genre, mood, and energy. The Recommender scores songs by matching genre (+1.0), mood (+0.7), and energy similarity (closer is better). The top k songs are recommended.
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
 
 Real-world recommendation systems like Spotify and Apple Music combine numerical similarity and categorical matching into a unified scoring framework, then apply a separate ranking layer to ensure the final list is diverse and engaging rather than just a stack of near-identical songs. Our recommendation system uses a two-layer approach inspired by real-world platforms like Spotify and Apple Music. First, we apply a Scoring Rule that combines both categorical and numerical features into a single composite score for each song:
 
@@ -87,17 +73,15 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+I tried changing the genre and mood weights, and tested edge cases like empty or unknown preferences. The system worked well for common profiles but gave zero scores for missing or rare preferences.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
+
+The system only works on a small catalog, does not use lyrics or tempo, and can over-favor common genres or moods. It does not handle missing or unknown preferences well.
 
 Examples:
 
@@ -115,11 +99,8 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
+I learned that recommenders use simple rules to turn data into predictions, but these rules can create bias or filter bubbles. I was surprised by how strict the system is and how it can miss good recommendations for unusual users. Human judgment is still important in real systems.
 
 ---
 
